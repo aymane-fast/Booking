@@ -18,8 +18,9 @@ class RoomController extends Controller
 
     public function show(Room $room)
     {
+        $days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
         $sessions = Session::where('room_id', $room->id)->get();
-        return view('roomsShow', compact('room', 'sessions'));
+        return view('roomsShow', compact('room', 'sessions', 'days'));
     }
 }
 

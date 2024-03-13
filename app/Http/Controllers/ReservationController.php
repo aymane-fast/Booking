@@ -9,6 +9,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Session;
 use App\Models\Reservation;
+use Illuminate\Support\Facades\Auth;
 
 class ReservationController extends Controller
 {
@@ -24,13 +25,11 @@ class ReservationController extends Controller
             'name' => 'required|string',
             'reason' => 'required|string',
         ]);
-        
+        $userId = Auth::id();
         Reservation::create([
 
             'session_id' => $data['session_id'],
-            'reason' => $data['reason'],
-            // 'name' => $data['name'],
-
+            'user_id' => $userId
         ]);
 
         return redirect()->route('rooms.index')->with('success', 'Reservation created successfully.');
