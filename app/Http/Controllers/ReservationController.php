@@ -24,12 +24,13 @@ class ReservationController extends Controller
             'name' => 'required|string',
             'reason' => 'required|string',
         ]);
-        
-        Reservation::create([
 
+        $userId = auth()->id();
+        Reservation::create([
+            'user_id' => $userId,
             'session_id' => $data['session_id'],
             'reason' => $data['reason'],
-            // 'name' => $data['name'],
+            'name' => $data['name'],
 
         ]);
 

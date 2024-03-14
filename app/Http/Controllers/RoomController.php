@@ -19,7 +19,8 @@ class RoomController extends Controller
     public function show(Room $room)
     {
         $sessions = Session::where('room_id', $room->id)->get();
-        return view('roomsShow', compact('room', 'sessions'));
+        $reservations = Reservation::all();
+        return view('roomsShow', compact('room', 'sessions', 'reservations'));
     }
 }
 
