@@ -10,30 +10,23 @@ use Illuminate\Support\Facades\Auth;
 
 class ReservationController extends Controller
 {
-    public function create($day, $session_id, $room_id)
+    public function create($day, $session, $room_id)
     {
         $user = Auth::user(); // Get the currently authenticated user
 
-        return view('reservations', compact('user','day', 'session_id', 'room_id'));
+        return view('reservations', compact('user','day', 'session', 'room_id'));
     }
 
     public function store(Request $request)
     {
-        $data = $request->validate([
-            'session_id' => 'required|exists:sessions,id',
-            'name' => 'required|string',
-            'reason' => 'required|string',
-            'day' => 'required|date',
-            'session' => 'required|integer',
-            'room_id' => 'required|exists:rooms,id',
-        ]);
 
         Reservation::create([
-            'session_id' => $data['session_id'],
+            'session' => $request['session'],
             'user_id' => Auth::id(),
-            'day' => $data['day'],
-            'session' => $data['session'],
-            'room_id' => $data['room_id'],
+            'day' => $request['day'],
+            'session' => $request['session'],
+            'room_id' => $request['room_id'],
+            'reason' => $request['reason']
         ]);
 
         return redirect()->route('rooms.index')->with('success', 'Reservation created successfully.');
