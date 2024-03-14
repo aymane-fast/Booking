@@ -58,10 +58,10 @@
                         <td>
                             @if (isset($reservations[$day][$i]))
                     Booked by: {{ $reservations[$day][$i]->name }} (Reason: {{ $reservations[$day][$i]->reason }})
-                    <a href="{{ route('reservations.edit', ['id' => $reservations[$day][$i]->id]) }}">Edit</a>
+                    <a href="{{ route('reservations.edit', ['id' => $reservations[$day][$i]->id, 'room_id' => $room->id]) }}">Edit</a>
                 @else
                     Available
-                    <a href="{{ route('reservations.create', ['day' => $day, 'session' => $i]) }}">Book Now</a>
+                    <a href="{{ route('reservations.create', ['day' => $day, 'session' => $i, 'room_id' => $room->id]) }}">Book Now</a>
                 @endif
                         </td>
                     </tr>
