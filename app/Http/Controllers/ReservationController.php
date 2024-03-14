@@ -14,10 +14,6 @@ class ReservationController extends Controller
     {
         $user = Auth::user(); // Get the currently authenticated user
 
-        if ($user) {
-            $userId = $user->id; // Get the user's ID
-            $userName = $user->name; // Get the user's name
-        }
         return view('reservations', compact('user','day', 'session_id', 'room_id'));
     }
 
