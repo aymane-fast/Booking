@@ -9,9 +9,14 @@ return new class extends Migration
     public function up():void
     {
         Schema::create('reservations', function (Blueprint $table) {
+            // $table->foreignId('session_id')->constrained()->onDelete('cascade');
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->foreignId('session_id')->constrained()->onDelete('cascade');
+            $table->foreignId('room_id')->constrained()->onDelete('cascade');
+            $table->string('day');
+            $table->string('session');
+
+
             $table->timestamps();
         });
     }
