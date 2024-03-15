@@ -13,7 +13,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->foreignId('room_id')->constrained()->onDelete('cascade');
-            $table->string('day');
+            $table->date('date');
             $table->string('session');
             $table->string('reason');
             $table->timestamps();

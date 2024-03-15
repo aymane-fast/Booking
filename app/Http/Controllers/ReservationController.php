@@ -10,11 +10,11 @@ use Illuminate\Support\Facades\Auth;
 
 class ReservationController extends Controller
 {
-    public function create($day, $session, $room_id)
+    public function create($date, $session, $room_id )
     {
         $user = Auth::user(); // Get the currently authenticated user
 
-        return view('reservations', compact('user','day', 'session', 'room_id'));
+        return view('reservations', compact('user','date', 'session', 'room_id'));
     }
 
     public function store(Request $request)
@@ -23,7 +23,7 @@ class ReservationController extends Controller
         Reservation::create([
             'session' => $request['session'],
             'user_id' => Auth::id(),
-            'day' => $request['day'],
+            'date' => $request['date'],
             'session' => $request['session'],
             'room_id' => $request['room_id'],
             'reason' => $request['reason']

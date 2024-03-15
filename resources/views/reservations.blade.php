@@ -12,7 +12,7 @@
         @csrf
 
         <input type="hidden" name="user_id" value="{{ $user->id }}">
-        <input type="hidden" name="day" value="{{ $day }}">
+        <input type="hidden" name="date" value="{{ $date }}">
         <input type="hidden" name="session" value="{{ $session }}">
         <input type="hidden" name="room_id" value="{{ $room_id }}">
 

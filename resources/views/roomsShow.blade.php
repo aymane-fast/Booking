@@ -48,36 +48,38 @@
 
     <table>
         <tbody>
+            <tr>
+                <th></th>
+                @for ($i = 1; $i <= 5; $i++)
+                    <th>Session {{ $i }}</th>
+                @endfor
+            </tr>
             @foreach ($days as $day)
                 <tr>
-                    <th colspan="4">{{ $day }}</th>
-                </tr>
-                @for ($i = 1; $i <= 5; $i++)
-                    <tr>
-                        <td>Session{{ $i }}</td>
+                    <th>{{ \Carbon\Carbon::parse($day)->format('l') }}  {{ $day }}</th>
+                    @for ($i = 1; $i <= 5; $i++)
                         <td>
                             @if (isset($reservations[$day][$i]))
-                    Booked by: {{ $reservations[$day][$i]->name }} (Reason: {{ $reservations[$day][$i]->reason }})
-                    <a href="{{ route('reservations.edit', ['id' => $reservations[$day][$i]->id, 'room_id' => $room->id]) }}">
-                        Edit
-                    </a>
-                @else
-                    Available
-                    <a href="{{ route('reservations.create', ['day' => $day, 'session' => $i, 'room_id' => $room->id]) }}">
-                        Book Now
-                    </a>
-                @endif
+                                Booked by: {{ $reservations[$day][$i]->name }} (Reason: {{ $reservations[$day][$i]->reason }})
+                                {{-- <a href="{{ route('reservations.edit', ['id' => $reservations[$day][$i]->id, 'room_id' => $room->id]) }}"> --}}
+                                    Edit
+                                </a>
+                            @else
+                                Available
+                                <a href="{{ route('reservations.create', ['date' => $day, 'session' => $i, 'room_id' => $room->id]) }}">
+                                    Book Now
+                                </a>
+                            @endif
                         </td>
-                    </tr>
-                @endfor
+                    @endfor
+                </tr>
             @endforeach
         </tbody>
     </table>
-
-    
-
-    
-        </tbody>
-    </table>
+    <div class="nav-links">
+        <a href="{{ url('/rooms/'.$room->id.'/' . $prevWeek) }}">Previous Week</a>
+        <a href="{{ url('/rooms') }}">Rooms page</a>
+        <a href="{{ url('/rooms/'.$room->id.'/' . $nextWeek) }}">Next Week</a>
+    </div>
 </body>
 </html>
