@@ -10,12 +10,18 @@
     <h1>Book Session</h1>
     <form action="{{ route('reservations.store') }}" method="POST">
         @csrf
-        <input type="hidden" name="session_id" value="{{ $session->id }}">
-        <label for="name">Your Name:</label>
-        <input type="text" id="name" name="name" required>
-        <label for="reason">Reason for Booking:</label>
-        <textarea id="reason" name="reason" required></textarea>
-        <button type="submit">Book Session</button>
+
+        <input type="hidden" name="user_id" value="{{ $user->id }}">
+        <input type="hidden" name="date" value="{{ $date }}">
+        <input type="hidden" name="session" value="{{ $session }}">
+        <input type="hidden" name="room_id" value="{{ $room_id }}">
+
+        <div class="form-group">
+            <label for="reason">Reason</label>
+            <input type="text" id="reason" name="reason" class="form-control" required>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Create Reservation</button>
     </form>
 </body>
 </html>
