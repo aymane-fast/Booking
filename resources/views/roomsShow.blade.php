@@ -51,7 +51,7 @@
             <tr>
                 <th></th>
                 @for ($i = 1; $i <= 5; $i++)
-                    <th>Session {{ $i }}</th>
+                    <th>{{isset($sess[$i]) ? $sess[$i] : '' }}</th>
                 @endfor
             </tr>
             @foreach ($days as $day)
@@ -60,7 +60,7 @@
                     @for ($i = 1; $i <= 5; $i++)
                         <td>
                             @if (isset($reservations[$day][$i]))
-                                Booked by: {{ $reservations[$day][$i]->name }} (Reason: {{ $reservations[$day][$i]->reason }})
+                                Booked by: {{ $reservations[$day][$i]->user->name }} (Reason: {{ $reservations[$day][$i]->reason }})
                                 {{-- <a href="{{ route('reservations.edit', ['id' => $reservations[$day][$i]->id, 'room_id' => $room->id]) }}"> --}}
                                     Edit
                                 </a>
