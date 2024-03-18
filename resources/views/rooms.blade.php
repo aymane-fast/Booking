@@ -4,6 +4,13 @@
             {{ __('Room Availability') }}
         </h2>
     </x-slot>
+
+    @if (session('error'))
+        <div class="bg-red-500 text-white px-4 py-2 rounded">
+            {{ session('error') }}
+        </div>
+    @endif
+
     <div class="py-12">
     @foreach ($rooms as $room)
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
