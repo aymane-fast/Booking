@@ -16,7 +16,7 @@ class RoomController extends Controller
         $rooms = Room::all();
         return view('rooms', compact('rooms'));
     }
-
+    
     public function show(Room $room ,$date = null)
     {
 
@@ -48,6 +48,7 @@ class RoomController extends Controller
                     ->where('date', $day)
                     ->where('session', $i)
                     ->first();
+
             }
         }
         // dd($date);
