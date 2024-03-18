@@ -22,12 +22,12 @@ Route::middleware('auth')->group(function () {
     Route::get('/rooms/{room}/{date?}', [RoomController::class, 'show'])->name('rooms.show');
     Route::get('/reservations/create/{date}/{session}/{room_id}', [ReservationController::class, 'create'])->name('reservations.create');
     Route::post('/reservations', [ReservationController::class, 'store'])->name('reservations.store');
+    Route::get('/reservations/{id}/edit', [ReservationController::class, 'edit'])->name('reservations.edit');
+    Route::put('/reservations/{id}', [ReservationController::class, 'update'])->name('reservations.update');
+    Route::delete('/reservations/{id}', [ReservationController::class, 'destroy'])->name('reservations.destroy');
 });
 
 
-Route::get('/reservations/{id}/edit', [ReservationController::class, 'edit'])->name('reservations.edit');
-Route::put('/reservations/{id}', [ReservationController::class, 'update'])->name('reservations.update');
-Route::delete('/reservations/{id}', [ReservationController::class, 'destroy'])->name('reservations.destroy');
 
 
 
