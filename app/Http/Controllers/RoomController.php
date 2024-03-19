@@ -16,7 +16,7 @@ class RoomController extends Controller
         $rooms = Room::all();
         return view('rooms', compact('rooms'));
     }
-
+    
     public function show(Room $room ,$date = null)
     {
 
@@ -40,6 +40,7 @@ class RoomController extends Controller
 
         $sessions = Session::where('room_id', $room->id)->get();
 
+
         $reservations = [];
         foreach ($days as $day) {
             for ($i = 1; $i <= 5; $i++) {
@@ -47,6 +48,7 @@ class RoomController extends Controller
                     ->where('date', $day)
                     ->where('session', $i)
                     ->first();
+
             }
         }
         $sess =['','9h00-10h15','10h30-11h45','12h00-13h15','13h30-14h45','15h00-16h15'];

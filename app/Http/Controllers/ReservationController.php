@@ -48,4 +48,24 @@ class ReservationController extends Controller
 
         return redirect()->route('rooms.index')->with('success', 'Reservation created successfully.');
     }
+    public function edit($id)
+    {
+        $reservation = Reservation::findOrFail($id);
+        $user = Auth::user(); // Get the currently authenticated user
+        return view('reservationEdit', compact('user','reservation'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $reservation = Reservation::findOrFail($id);
+        $reservation->update($request->all());
+        return redirect()->route('rooms.index')->with('success', 'Reservation deleted successfully.');
+        }
+    
+    public function destroy($id)
+    {
+        $reservation = Reservation::findOrFail($id);
+        $reservation->delete();
+        return redirect()->route('rooms.index')->with('success', 'Reservation deleted successfully.');
+    }
 }
