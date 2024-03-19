@@ -21,7 +21,18 @@ class RoomController extends Controller
     {
         $days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
         $sessions = Session::where('room_id', $room->id)->get();
-        return view('roomsShow', compact('room', 'sessions', 'days'));
+
+        $reservations = [];
+        foreach ($days as $day) {
+            for ($i = 1; $i <= 5; $i++) {
+                $reservations[$day][$i] = Reservation::where('room_id', $room->id)
+                    ->where('date', $day)
+                    ->where('session', $i)
+                    ->first();
+            }
+        }
+        $sess =['','9h00-10h15','10h30-11h45','12h00-13h15','13h30-14h45','15h00-16h15'];
+        return view('roomsShow', compact('room', 'sessions', 'days', 'reservations', 'prevWeek', 'nextWeek' ,'sess'));
     }
 }
 

@@ -54,7 +54,7 @@
             <tr>
                 <th></th>
                 @for ($i = 1; $i <= 5; $i++)
-                    <th>Session {{ $i }}</th>
+                    <th>{{isset($sess[$i]) ? $sess[$i] : '' }}</th>
                 @endfor
             </tr>
             @foreach ($days as $day)
