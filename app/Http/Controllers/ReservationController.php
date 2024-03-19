@@ -21,19 +21,19 @@ class ReservationController extends Controller
     public function store(Request $request)
     {
 
-            // Get the current week's start and end dates
-        $weekStart = Carbon::now()->startOfWeek();
-        $weekEnd = Carbon::now()->endOfWeek();
+        //     // Get the current week's start and end dates
+        // $weekStart = Carbon::now()->startOfWeek();
+        // $weekEnd = Carbon::now()->endOfWeek();
 
-        // Count the user's reservations for the current week
-        $reservationCount = Reservation::where('user_id', Auth::id())
-            ->whereBetween('date', [$weekStart, $weekEnd])
-            ->count();
+        // // Count the user's reservations for the current week
+        // $reservationCount = Reservation::where('user_id', Auth::id())
+        //     ->whereBetween('date', [$weekStart, $weekEnd])
+        //     ->count();
 
-        // Check if the user has already made 4 reservations this week
-        if ($reservationCount >= 4) {
-            return redirect()->route('rooms.index')->with('error', 'You have reached the maximum number of reservations for this week.');
-        }
+        // // Check if the user has already made 4 reservations this week
+        // if ($reservationCount >= 4) {
+        //     return redirect()->route('rooms.index')->with('error', 'You have reached the maximum number of reservations for this week.');
+        // }
 
 
 
