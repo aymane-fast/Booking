@@ -6,7 +6,7 @@ use App\Http\Controllers\RoomController;
 use Illuminate\Support\Facades\Route;
 
 
-Route::get('/', function (){
+Route::get('/', function () {
     return view('welcome');
 });
 
@@ -17,7 +17,7 @@ Route::get('/dashboard', function () {
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');    
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::get('/rooms', [RoomController::class, 'index'])->name('rooms.index');
     Route::get('/rooms/{room}/{date?}', [RoomController::class, 'show'])->name('rooms.show');
     Route::get('/reservations/create/{date}/{session}/{room_id}', [ReservationController::class, 'create'])->name('reservations.create');
@@ -25,10 +25,11 @@ Route::middleware('auth')->group(function () {
     Route::get('/reservations/{id}/edit', [ReservationController::class, 'edit'])->name('reservations.edit');
     Route::put('/reservations/{id}', [ReservationController::class, 'update'])->name('reservations.update');
     Route::delete('/reservations/{id}', [ReservationController::class, 'destroy'])->name('reservations.destroy');
+    Route::get('/reservations/receipt/{reservation}', [ReservationController::class, 'receipt'])->name('reservations.receipt');
 });
 
 
 
 
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
