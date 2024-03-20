@@ -4,7 +4,7 @@
             {{ __('Ajouter une Salle') }}
         </h2>
     </x-slot>
-    <x-guest-layout>
+<x-guest-layout>
 
 
     <!-- Session Status -->

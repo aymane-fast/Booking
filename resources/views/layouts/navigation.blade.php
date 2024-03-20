@@ -6,7 +6,7 @@
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
                     <a href="{{ route('dashboard') }}">
-                        {{-- <x-application-logo class="block h-9 w-auto fill-current text-gray-800 dark:text-gray-200" /> --}}
+                        <x-application-logo class="block h-9 w-auto fill-current text-gray-800 dark:text-gray-200" />
 
                         {{-- <img src="{{ asset('logo.png') }}" alt="logo" class="block h-9 w-auto"> --}}
 
@@ -20,11 +20,11 @@
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Accueille') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('rooms.index')" :active="request()->routeIs('rooms')">
+                    <x-nav-link :href="route('rooms.index')" :active="request()->routeIs('rooms.index')">
                         {{ __('Salle') }}
                     </x-nav-link>
                     @if (Auth::user()->role  == 'admin')   
-                    <x-nav-link :href="route('rooms.create')" :active="request()->routeIs('rooms')">
+                    <x-nav-link :href="route('rooms.create')" :active="request()->routeIs('rooms.create')">
                         {{ __('Ajouter une Salle') }}
                     </x-nav-link>
                     <x-nav-link :href="route('register')" :active="request()->routeIs('register')">
@@ -84,8 +84,19 @@
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                {{ __('Dashboard') }}
+                {{ __('Accueille') }}
             </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('rooms.index')" :active="request()->routeIs('rooms.index')">
+                {{ __('Salle') }}
+            </x-responsive-nav-link>
+            @if (Auth::user()->role  == 'admin')   
+            <x-responsive-nav-link :href="route('rooms.create')" :active="request()->routeIs('rooms.create')">
+                {{ __('Ajouter une Salle') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('register')" :active="request()->routeIs('register')">
+                {{ __('Ajouter un Prof') }}
+            </x-responsive-nav-link>
+            @endif
         </div>
 
         <!-- Responsive Settings Options -->

@@ -31,19 +31,22 @@
                                     <td class="px-6 py-4 whitespace-nowrap border border-gray-300">
                                     @if (isset($reservations[$day][$i]))
                                         <div class="flex flex-col">
-                                            @if ( Auth::user()->role == 'admin')
-                                                <span class="flex items-center justify-center">
-                                                    Booked by: {{ $reservations[$day][$i]->user->name }}
+                                            @if ( Auth::check() && $reservations[$day][$i]->user_id == Auth::user()->id || Auth::user()->role == 'admin')
+                                                {{-- <span class="flex items-center justify-center">
+                                                    {{ $reservations[$day][$i]->user->name }}
                                                 </span>
                                                 <span class="flex items-center justify-center">
                                                     Reason: {{ $reservations[$day][$i]->reason }}
+                                                </span> --}}
+                                                <span class="flex items-start justify-between ">
+                                                    seance de {{ $reservations[$day][$i]->reason }} 
+                                                    par Mr {{ $reservations[$day][$i]->user->name }}
                                                 </span>
-                                            
                                             @else
                                                 <span class="flex items-center justify-center">Occupe</span>
                                             @endif
                                             @if (Auth::check() && $reservations[$day][$i]->user_id == Auth::user()->id || Auth::user()->role == 'admin')
-                                                <div class="mt-2">
+                                                <div class="mt-2 flex items-center justify-center">
                                                     <a href="{{ route('reservations.edit', ['id' => $reservations[$day][$i]->id, 'room_id' => $room->id]) }}"
                                                         class="text-blue-500 hover:text-blue-700">
                                                         <i class="fas fa-edit text-blue-500"></i>

@@ -6,12 +6,13 @@ use App\Http\Controllers\RoomController;
 use Illuminate\Support\Facades\Route;
 
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
+Route::get('/', function () {
+    $reservations = \App\Models\Reservation::all();
+    return view('dashboard',['reservations' => $reservations]);
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
