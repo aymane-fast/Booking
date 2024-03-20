@@ -11,11 +11,11 @@ use Illuminate\Support\Facades\Auth;
 
 class ReservationController extends Controller
 {
-    public function create($date, $session, $room_id )
+    public function create($date, $session, $room_id)
     {
         $user = Auth::user(); // Get the currently authenticated user
 
-        return view('reservations', compact('user','date', 'session', 'room_id'));
+        return view('reservations', compact('user', 'date', 'session', 'room_id'));
     }
 
     public function store(Request $request)
@@ -34,10 +34,7 @@ class ReservationController extends Controller
         // if ($reservationCount >= 4) {
         //     return redirect()->route('rooms.index')->with('error', 'You have reached the maximum number of reservations for this week.');
         // }
-
-
-
-        Reservation::create([
+        $reservation = Reservation::create([
             'session' => $request['session'],
             'user_id' => Auth::id(),
             'date' => $request['date'],
@@ -46,6 +43,31 @@ class ReservationController extends Controller
             'reason' => $request['reason']
         ]);
 
-        return redirect()->route('rooms.index')->with('success', 'Reservation created successfully.');
+        return redirect()->route('reservations.receipt', $reservation);
+    }
+    public function receipt(Reservation $reservation)
+    {
+
+        return view('reservationReceipt', compact('reservation'));
+    }
+    public function edit($id)
+    {
+        $reservation = Reservation::findOrFail($id);
+        $user = Auth::user(); // Get the currently authenticated user
+        return view('reservationEdit', compact('user', 'reservation'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $reservation = Reservation::findOrFail($id);
+        $reservation->update($request->all());
+        return redirect()->route('rooms.index')->with('success', 'Reservation deleted successfully.');
+    }
+
+    public function destroy($id)
+    {
+        $reservation = Reservation::findOrFail($id);
+        $reservation->delete();
+        return redirect()->route('rooms.index')->with('success', 'Reservation deleted successfully.');
     }
 }

@@ -11,8 +11,12 @@ class Room extends Model
 
     protected $fillable = ['room_name', 'capacity'];
 
-    public function sessions()
+    // public function sessions()
+    // {
+    //     return $this->hasMany(Session::class);
+    // }
+    public function reservations()
     {
-        return $this->hasMany(Session::class);
+        return $this->hasMany(Reservation::class);
     }
 }
