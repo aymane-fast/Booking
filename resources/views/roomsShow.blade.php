@@ -1,191 +1,106 @@
-<!DOCTYPE html>
-<html lang="en">
+<x-app-layout>
+    <x-slot name="header">
+        <h1 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight flex items-center justify-center">
+            {{ $room->room_name }} Availability
+        </h1>
+    </x-slot>
+    <x-guest-layout>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ $room->room_name }} Availability</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f4;
-            color: #333;
-        }
+        <div class="overflow-x-auto">
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg mb-4 border border-gray-200">
+            <table id="myTable" class="min-w-full divide-y divide-gray-200">
+                <thead class="bg-gray-50">
+                    <tr>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            Day
+                        </th>
+                        @for ($i = 0; $i <= 4; $i++)
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                {{isset($sess[$i]) ? $sess[$i] : '' }}
+                            </th>
+                        @endfor
+                    </tr>
+                </thead>
+                <tbody class="bg-white divide-y divide-gray-200">
+                    @foreach ($days as $day)
+                        <tr>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                {{ \Carbon\Carbon::parse($day)->format('l') }} {{ $day }}
+                            </td>
+                            @for ($i = 0; $i <= 4; $i++)
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    @if (isset($reservations[$day][$i]))
+                                        <div class="flex flex-col">
+                                            <span>Booked by: {{ $reservations[$day][$i]->user->name }}</span>
+                                            <span>Reason: {{ $reservations[$day][$i]->reason }}</span>
+                                            @if (Auth::check() && $reservations[$day][$i]->user_id == Auth::user()->id || Auth::user()->role == 'admin')
+                                                <div class="mt-2">
+                                                    <a href="{{ route('reservations.edit', ['id' => $reservations[$day][$i]->id, 'room_id' => $room->id]) }}"
+                                                        class="text-blue-500 hover:text-blue-700">
+                                                        Edit
+                                                    </a>
+                                                    <form action="{{ route('reservations.destroy', ['id' => $reservations[$day][$i]->id]) }}"
+                                                        method="POST" class="inline-block">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit" class="text-red-500 hover:text-red-700 ml-2"
+                                                            onclick="return confirm('Are you sure you want to delete this reservation?')">Delete</button>
+                                                    </form>
+                                                </div>
+                                            @endif
+                                        </div>
+                                    @else
+                                        <div class="flex flex-col items-center">
+                                            <span>Available</span>
+                                            <a href="{{ route('reservations.create', ['date' => $day, 'session' => $i, 'room_id' => $room->id]) }}"
+                                                class="text-green-500 hover:text-green-700 mt-2">
+                                                Book Now
+                                            </a>
+                                        </div>
+                                    @endif
+                                </td>
+                            @endfor
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+        </div>
 
-        h1 {
-            text-align: center;
-            margin-top: 20px;
-            color: #007bff;
-        }
+        <div class="flex justify-center mt-4">
+            <a href="{{ url('/rooms/' . $room->id . '/' . $prevWeek) }}" class="text-blue-500 hover:text-blue-700 mx-2">
+                <x-primary-button class="ms-4">
+                    <i class="fas fa-arrow-left"></i> <!-- Font Awesome left arrow icon -->
+                </x-primary-button>
+            </a>
+            <a href="{{ url('/rooms/' . $room->id . '/' . $nextWeek) }}" class="text-blue-500 hover:text-blue-700 mx-2">
+                <x-primary-button class="ms-4">
+                    <i class="fas fa-arrow-right"></i> <!-- Font Awesome right arrow icon -->
+                </x-primary-button>
+            </a>
+        </div>
+        <div class="download-pdf flex items-center justify-end mt-4">
+            <button onclick="downloadAsPDF()" class="text-blue-500 hover:text-blue-700 mx-2 ">
+                {{-- <x-primary-button class="ms-4"> --}}
+                Télecharger
+                <i class="fas fa-file-pdf"></i> <!-- Font Awesome PDF icon -->
+                {{-- </x-primary-button> --}}
+            </button>
+        </div>
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 20px auto;
-            background-color: #fff;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
 
-        th,
-        td {
-            padding: 10px;
-            text-align: left;
-            border-bottom: 1px solid #ddd;
-        }
-
-        th {
-            background-color: #007bff;
-            color: white;
-            text-transform: uppercase;
-        }
-
-        tr:nth-child(even) {
-            background-color: #f2f2f2;
-        }
-
-        a.button {
-            display: inline-block;
-            padding: 8px 12px;
-            background-color: #007bff;
-            color: white;
-            text-decoration: none;
-            border-radius: 4px;
-            transition: background-color 0.3s ease;
-        }
-
-        a.button:hover {
-            background-color: #0056b3;
-        }
-
-        .nav-links {
-            text-align: center;
-            margin-top: 20px;
-        }
-
-        .nav-links a {
-            margin: 0 10px;
-            color: #007bff;
-            text-decoration: none;
-            border-bottom: 2px solid transparent;
-            transition: border-bottom-color 0.3s ease;
-        }
-
-        .nav-links a:hover {
-            border-bottom-color: #007bff;
-        }
-
-        .download-pdf button {
-            display: block;
-            margin: 20px auto;
-            padding: 10px 20px;
-            background-color: #007bff;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-
-        .download-pdf button:hover {
-            background-color: #0056b3;
-        }
-    </style>
-</head>
-
-<body>
-    <h1>{{ $room->room_name }} Availability</h1>
-
-    <table>
-        <thead>
-            <tr>
-                <th></th>
-                @for ($i = 1; $i <= 5; $i++)
-                    <th>{{isset($sess[$i]) ? $sess[$i] : '' }}</th>
-                @endfor
-            </tr>
-        </thead>
-        <tbody>
-            @foreach ($days as $day)
-                <tr>
-                    <th>{{ \Carbon\Carbon::parse($day)->format('l') }} {{ $day }}</th>
-                    @for ($i = 1; $i <= 5; $i++)
-                        <td>
-                            @if (isset($reservations[$day][$i]))
-                                Booked by:
-                                {{ $reservations[$day][$i]->user->name }}<br>
-                                Reason:
-                                {{ $reservations[$day][$i]->reason }}
-                                <br>
-                                @if (Auth::check() && $reservations[$day][$i]->user_id == Auth::user()->id || Auth::user()->role == 'admin')
-                                    <a href="{{ route('reservations.edit', ['id' => $reservations[$day][$i]->id, 'room_id' => $room->id]) }}"
-                                        class="button">
-                                        Edit
-                                    </a>
-                                    <form action="{{ route('reservations.destroy', ['id' => $reservations[$day][$i]->id]) }}"
-                                        method="POST" >
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="button"
-                                            onclick="return confirm('Are you sure you want to delete this reservation?')">Delete</button>
-                                    </form>
-                                @endif
-                            @else
-                                Available
-                                <br>
-                                <a href="{{ route('reservations.create', ['date' => $day, 'session' => $i, 'room_id' => $room->id]) }}"
-                                    class="button">
-                                    Book Now
-                                </a>
-                            @endif
-                        </td>
-                    @endfor
-                </tr>
-            @endforeach
-        </tbody>
-    </table>
-
-    <div class="nav-links">
-        <a href="{{ url('/rooms/' . $room->id . '/' . $prevWeek) }}">Previous Week</a>
-        <a href="{{ url('/rooms') }}">Rooms page</a>
-        <a href="{{ url('/rooms/' . $room->id . '/' . $nextWeek) }}">Next Week</a>
-    </div>
-    <div class="download-pdf">
-        <button onclick="downloadAsPDF()">Download as PDF</button>
-    </div>
-    <script>
-        function downloadAsPDF() {
-            // Options for pdf generation
-            const options = {
-                margin: 10,
-                filename: '{{ $room->room_name }}_availability.pdf',
-                image: {
-                    type: 'jpeg',
-                    quality: 0.98
-                },
-                html2canvas: {
-                    scale: 2
-                },
-                jsPDF: {
-                    unit: 'mm',
-                    format: 'a4',
-                    orientation: 'landscape'
-                }
-                // jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
-            };
-
-            // Target element to convert to PDF
-            const element = document.body;
-
-            // Generate PDF
-            html2pdf()
-                .from(element)
-                .set(options)
-                .save();
-        }
-    </script>
-</body>
-
-</html>
+        <script>
+            function downloadAsPDF() {
+    var element = document.getElementById('myTable');
+    var opt = {
+        margin: 0,
+        filename: '{{ $room->room_name }}.pdf',
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { scale: 1 },
+        jsPDF: { unit: 'in', format: 'letter', orientation: 'landscape' }
+    };
+    html2pdf().set(opt).from(element).save();
+}
+        </script>
+    </x-guest-layout>
+</x-app-layout>

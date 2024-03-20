@@ -13,8 +13,11 @@ class RoomController extends Controller
 {
     public function index()
 {
-    $rooms = Room::orderBy('room_name')->get();
+    $rooms = Room::orderByRaw('CAST(SUBSTRING(room_name, CHAR_LENGTH("salle m ") + 1) AS UNSIGNED)')
+        ->orderBy('room_name')
+        ->paginate(5);
     return view('rooms', ['rooms' => $rooms]);
+
 }
     
     public function show(Room $room ,$date = null)
@@ -41,14 +44,14 @@ class RoomController extends Controller
 
         $reservations = [];
         foreach ($days as $day) {
-            for ($i = 1; $i <= 5; $i++) {
+            for ($i = 0; $i <= 4; $i++) {
                 $reservations[$day][$i] = Reservation::where('room_id', $room->id)
                     ->where('date', $day)
                     ->where('session', $i)
                     ->first();
             }
         }
-        $sess =['','9h00-10h15','10h30-11h45','12h00-13h15','13h30-14h45','15h00-16h15'];
+        $sess =['9h00-10h15','10h30-11h45','12h00-13h15','13h30-14h45','15h00-16h15'];
         return view('roomsShow', compact('room', 'sessions', 'days', 'reservations', 'prevWeek', 'nextWeek' ,'sess'));
     }
 
