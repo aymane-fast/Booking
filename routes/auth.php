@@ -9,12 +9,20 @@ use App\Http\Controllers\Auth\PasswordController;
 use App\Http\Controllers\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\VerifyEmailController;
+use App\Http\Controllers\RoomController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('admin')->group(function () {
     Route::get('register', [RegisteredUserController::class, 'create'])
         ->name('register');
     Route::post('register', [RegisteredUserController::class, 'store']);
+    Route::get('rooms.create', [RoomController::class , 'create'])
+    ->name('rooms.create');
+    Route::post('rooms.store', [RoomController::class , 'store'])
+    ->name('rooms.store');
+    Route::delete('rooms.destroy/{room}', [RoomController::class , 'destroy'])
+    ->name('rooms.destroy');
+    
 });
 
 // Route::get('register', [RegisteredUserController::class, 'create'])
@@ -44,10 +52,10 @@ Route::middleware('guest')->group(function () {
 
 Route::middleware('auth')->group(function () {
 
-    Route::get('register', [RegisteredUserController::class, 'create'])
-        ->name('register');
+    // Route::get('register', [RegisteredUserController::class, 'create'])
+    //     ->name('register');
 
-    Route::post('register', [RegisteredUserController::class, 'store']);
+    // Route::post('register', [RegisteredUserController::class, 'store']);
     
     Route::get('verify-email', EmailVerificationPromptController::class)
         ->name('verification.notice');
