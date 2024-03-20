@@ -22,7 +22,7 @@
                         {{ __('Ajouter une Salle') }}
                     </x-nav-link>
                     <x-nav-link :href="route('register')" :active="request()->routeIs('register')">
-                        {{ __('Ajouter une Prof') }}
+                        {{ __('Ajouter un Prof') }}
                     </x-nav-link>
                 </div>
             </div>
