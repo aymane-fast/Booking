@@ -6,7 +6,12 @@
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
                     <a href="{{ route('dashboard') }}">
-                        <x-application-logo class="block h-9 w-auto fill-current text-gray-800 dark:text-gray-200" />
+                        {{-- <x-application-logo class="block h-9 w-auto fill-current text-gray-800 dark:text-gray-200" /> --}}
+
+                        {{-- <img src="{{ asset('logo.png') }}" alt="logo" class="block h-9 w-auto"> --}}
+
+
+
                     </a>
                 </div>
 
@@ -18,12 +23,14 @@
                     <x-nav-link :href="route('rooms.index')" :active="request()->routeIs('rooms')">
                         {{ __('Salle') }}
                     </x-nav-link>
+                    @if (Auth::user()->role  == 'admin')   
                     <x-nav-link :href="route('rooms.create')" :active="request()->routeIs('rooms')">
                         {{ __('Ajouter une Salle') }}
                     </x-nav-link>
                     <x-nav-link :href="route('register')" :active="request()->routeIs('register')">
                         {{ __('Ajouter un Prof') }}
                     </x-nav-link>
+                    @endif
                 </div>
             </div>
 

@@ -13,16 +13,16 @@
     <form method="POST" action="{{ route('rooms.store') }}">
         @csrf
 
-        <!-- Room Name -->
+        <!-- Nom de la salle -->
         <div>
-            <x-input-label for="room_name" :value="__('Room Name')" />
+            <x-input-label for="room_name" :value="__('Nom de la Salle')" />
             <x-text-input id="room_name" class="block mt-1 w-full" type="text" name="room_name" :value="old('room_name')" required autofocus />
             <x-input-error :messages="$errors->get('room_name')" class="mt-2" />
         </div>
 
-        <!-- Capacity -->
+        <!-- Capacité -->
         <div class="mt-4">
-            <x-input-label for="capacity" :value="__('Capacity')" />
+            <x-input-label for="capacity" :value="__('Capacité')" />
             <x-text-input id="capacity" class="block mt-1 w-full" type="number" name="capacity" :value="old('capacity')" required />
             <x-input-error :messages="$errors->get('capacity')" class="mt-2" />
         </div>

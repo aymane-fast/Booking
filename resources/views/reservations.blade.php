@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Book Session</title>
+    <title>Réserver</title>
     <!-- Include Tailwind CSS -->
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
 <body class="bg-gray-100 font-sans">
     <div class="container mx-auto p-8">
-        <h1 class="text-3xl font-bold mb-4">Book Session</h1>
+        <h1 class="text-3xl font-bold mb-4">Réserver</h1>
         <form action="{{ route('reservations.store') }}" method="POST">
             @csrf
 

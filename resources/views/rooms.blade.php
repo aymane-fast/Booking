@@ -1,13 +1,14 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Room Availability</title>
-    <!-- Include Tailwind CSS -->
+    <title>Disponibilité des Salles</title>
+    <!-- Inclure Tailwind CSS -->
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
+
 <x-app-layout>
     <x-guest-layout>
     
@@ -33,7 +34,7 @@
                                 @csrf
                                 @method('DELETE')
                                 <x-primary-button class="ms-4">
-                                    {{ __('Delete') }}
+                                    {{ __('Supprimer') }}
                                 </x-primary-button>
                             </form>
                         </div>
@@ -43,4 +44,5 @@
             </div>
         </div>
     </x-guest-layout>
-    </x-app-layout>
+</x-app-layout>
+</html>
