@@ -1,27 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Room Availability</title>
+    <!-- Include Tailwind CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
 <x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Room Availability') }}
-        </h2>
-    </x-slot>
 
-    @if (session('error'))
-        <div class="bg-red-500 text-white px-4 py-2 rounded">
-            {{ session('error') }}
+    <body class="bg-gray-800 text-gray-100 font-sans">
+        <x-slot name="header">
+            <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+                {{ __('Room Availability') }}
+            </h2>
+        </x-slot>
+        <div class="max-w-7xl mx-auto p-8">
+            <ul>
+                @foreach ($rooms as $room)
+                    <li class="bg-gray-700 rounded shadow-sm p-6 text-gray-100 mb-4">
+                        <a href="{{ route('rooms.show', $room) }}">{{ $room->room_name }}</a>
+                    </li>
+                @endforeach
+            </ul>
         </div>
-    @endif
+    </body>
 
-    <div class="py-12">
-    @foreach ($rooms as $room)
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900 dark:text-gray-100">
-                    <a href="{{ route('rooms.show', $room) }}">{{ __($room->room_name) }}</a>
-                </div>
-            </div>
-        </div>
-        @endforeach
-    </div>
+</html>
+
 </x-app-layout>
 
 
