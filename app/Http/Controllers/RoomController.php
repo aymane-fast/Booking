@@ -51,7 +51,13 @@ class RoomController extends Controller
                     ->first();
             }
         }
-        $sess =['9h00-10h15','10h30-11h45','12h00-13h15','13h30-14h45','15h00-16h15'];
+        $sess = [
+            0 => '9h00-10h15',
+            1 => '10h30-11h45',
+            2 => '12h00-13h15',
+            3 => '13h30-14h45',
+            4 => '15h00-16h15'
+        ];
         return view('roomsShow', compact('room', 'sessions', 'days', 'reservations', 'prevWeek', 'nextWeek' ,'sess'));
     }
 

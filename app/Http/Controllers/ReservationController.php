@@ -61,13 +61,13 @@ class ReservationController extends Controller
     {
         $reservation = Reservation::findOrFail($id);
         $reservation->update($request->all());
-        return redirect()->route('rooms.index')->with('success', 'Reservation deleted successfully.');
+        return redirect()->route('rooms.show', $reservation->room_id)->with('success', 'Reservation deleted successfully.');
     }
 
     public function destroy($id)
     {
         $reservation = Reservation::findOrFail($id);
         $reservation->delete();
-        return redirect()->route('rooms.index')->with('success', 'Reservation deleted successfully.');
+        return redirect()->back()->with('success', 'Reservation deleted successfully.');
     }
 }

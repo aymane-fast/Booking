@@ -7,7 +7,7 @@
     <x-guest-layout>
 
         <div class="overflow-x-auto">
-            <h2 class="text-xl font-bold  text-center my-4"></h2>
+            <h2 class="text-xl font-bold  text-center my-4">{{$days[0]}} / {{$days[6]}}</h2>
                 <table id="myTable" class="min-w-1/2 max-w-full mx-auto divide-y divide-gray-200 border border-gray-300">
                     <thead class="bg-gray-50">
                         <tr>
@@ -39,8 +39,8 @@
                                                     Reason: {{ $reservations[$day][$i]->reason }}
                                                 </span> --}}
                                                 <span class="flex items-start justify-between ">
-                                                    seance de {{ $reservations[$day][$i]->reason }} 
-                                                    par Mr {{ $reservations[$day][$i]->user->name }}
+                                                    Mr {{ $reservations[$day][$i]->user->name }} :
+                                                    {{ $reservations[$day][$i]->reason }} 
                                                 </span>
                                             @else
                                                 <span class="flex items-center justify-center">Occupe</span>
