@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\RoomController;
 use Illuminate\Support\Facades\Route;
+use App\Models\Audit;
 
 
 // Route::get('/', function () {
@@ -12,7 +13,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     $reservations = \App\Models\Reservation::all();
-    return view('dashboard',['reservations' => $reservations]);
+    $auditLogs = Audit::latest()->paginate(5);
+    return view('dashboard',compact('auditLogs'), ['reservations' => $reservations]);
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
