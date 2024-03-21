@@ -13,7 +13,7 @@
             <div class="bg-blue-200 dark:bg-blue-800 overflow-hidden shadow-sm sm:rounded-lg border border-gray-200">
                 <div class="p-6 text-blue-900 dark:text-blue-100">
                     <a href="{{ route('register') }}">
-                        {{ $reservation->date }} - Session {{ $reservation->session }}: {{ $reservation->room->room_name }} {{ $reservation->user->name }}
+                        {{ $reservation->date }} - {{ $reservation->session_name }} : {{ $reservation->room->room_name }} {{ $reservation->user->name }}
                     </a>
                 </div>
             </div>
@@ -31,7 +31,7 @@
                     {{-- Debugging: Dump reservations --}}
                     <ul>
                         @foreach (Auth::user()->reservations as $reservation)
-                        <li>{{ $reservation->date }} - Session {{ $reservation->session }}: {{ $reservation->room->room_name }}</li>
+                        <li>{{ $reservation->date }} -  {{ $reservation->session_name }} : {{ $reservation->room->room_name }}</li>
                         @endforeach
                     </ul>
                 </div>

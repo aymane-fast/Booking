@@ -20,7 +20,7 @@
                         'PPR' => $reservation->user->ppr,
                         'Email' => $reservation->user->email,
                         'Date' => $reservation->date,
-                        'Session' => $reservation->session,
+                        'Séance' => $reservation->session_name,
                         'Salle' => $reservation->room->room_name,
                         'Raison' => $reservation->reason
                     ] as $title => $value)

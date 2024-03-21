@@ -60,7 +60,7 @@
                                         </div>
                                     @else
                                         <div class="flex flex-col items-center">
-                                            <a href="{{ route('reservations.create', ['date' => $day, 'session' => $i, 'room_id' => $room->id]) }}"
+                                            <a href="{{ route('reservations.create', ['date' => $day, 'session_number' => $i ,'session_name' =>$sess[$i], 'room_id' => $room->id]) }}"
                                                 class="text-green-500 hover:text-green-700 mt-2">
                                                 Reserver <i class="fas fa-calendar-alt "></i>
                                             </a>

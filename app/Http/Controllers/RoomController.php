@@ -47,7 +47,7 @@ class RoomController extends Controller
             for ($i = 0; $i <= 4; $i++) {
                 $reservations[$day][$i] = Reservation::where('room_id', $room->id)
                     ->where('date', $day)
-                    ->where('session', $i)
+                    ->where('session_number', $i)
                     ->first();
             }
         }

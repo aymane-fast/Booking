@@ -11,7 +11,8 @@
 
             <input type="hidden" name="user_id" value="{{ $user->id }}">
             <input type="hidden" name="date" value="{{ $date }}">
-            <input type="hidden" name="session" value="{{ $session }}">
+            <input type="hidden" name="session_number" value="{{ $session_number }}">
+            <input type="hidden" name="session_name" value="{{ $session_name }}">
             <input type="hidden" name="room_id" value="{{ $room_id }}">
 
             <div class="mb-4">
