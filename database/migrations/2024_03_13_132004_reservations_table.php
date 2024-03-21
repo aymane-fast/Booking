@@ -14,7 +14,8 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->foreignId('room_id')->constrained()->onDelete('cascade');
             $table->date('date');
-            $table->string('session');
+            $table->integer('session_number');
+            $table->string('session_name');
             $table->string('reason');
             $table->timestamps();
         });
