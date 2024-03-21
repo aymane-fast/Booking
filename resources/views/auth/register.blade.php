@@ -69,7 +69,7 @@
             <div class="flex items-center justify-center mt-4">
                 
                 <x-primary-button class="ms-4">
-                    {{ __("S'inscrire") }}
+                    {{ __("Inscrire") }}
                 </x-primary-button>
             </div>
         </form>
