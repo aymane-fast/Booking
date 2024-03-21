@@ -78,8 +78,9 @@
                                 <h2 class="text-lg font-semibold mb-4">Vos réservations</h2>
                                 <ul>
                                     @foreach (Auth::user()->reservations as $reservation)
-                                        <li>{{ $reservation->date }} - Session {{ $reservation->session }}:
-                                            {{ $reservation->room->room_name }}</li>
+                                        <li>{{ $reservation->date }} - {{ $reservation->room->room_name }} : ({{ $reservation->session_name }}) 
+                                            
+                                        </li>
                                     @endforeach
                                 </ul>
                             </div>

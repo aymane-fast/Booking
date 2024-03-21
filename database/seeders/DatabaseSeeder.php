@@ -10,6 +10,7 @@ use Illuminate\Database\Seeder;
 
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 class DatabaseSeeder extends Seeder
 {
@@ -27,6 +28,9 @@ class DatabaseSeeder extends Seeder
             'email' => 'admin@example.com',
             'role' => 'admin',
             'password' => Hash::make('12345678'),
+            'remember_token' => Str::random(10), // Generate a random remember token
+            'created_at' => now(), // Set the created_at field to the current time
+            'updated_at' => now(), 
         ]);
 
         // Insert amphitheaters
