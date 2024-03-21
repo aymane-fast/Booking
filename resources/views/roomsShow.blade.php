@@ -15,7 +15,7 @@
                                 Day
                             </th>                            
                             @for ($i = 0; $i <= 4; $i++)
-                                <th class="px-6 py-3 text-left text-md font-bold text-gray-500 uppercase tracking-wider border border-gray-300">
+                                <th class="px-6 py-3 text-left text-md font-bold text-gray-500 uppercase tracking-wider border border-gray-300 bg-gray-200">
                                     {{isset($sess[$i]) ? $sess[$i] : '' }}
                                 </th>
                             @endfor
@@ -32,12 +32,7 @@
                                     @if (isset($reservations[$day][$i]))
                                         <div class="flex flex-col">
                                             @if ( Auth::check() && $reservations[$day][$i]->user_id == Auth::user()->id || Auth::user()->role == 'admin')
-                                                {{-- <span class="flex items-center justify-center">
-                                                    {{ $reservations[$day][$i]->user->name }}
-                                                </span>
-                                                <span class="flex items-center justify-center">
-                                                    Reason: {{ $reservations[$day][$i]->reason }}
-                                                </span> --}}
+                                            
                                                 <span class="flex items-start justify-between ">
                                                     Mr {{ $reservations[$day][$i]->user->name }} :
                                                     {{ $reservations[$day][$i]->reason }} 
