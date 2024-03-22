@@ -78,6 +78,7 @@
                     </div>
                 </div>
             </div>
+            {{$auditLogs->links()}}
         @else
             @isset(Auth::user()->reservations)
                 <div class="py-12">
