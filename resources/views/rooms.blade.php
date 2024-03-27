@@ -16,8 +16,8 @@
         <div class="py-12">
             <div class="max-w-4xl mx-auto sm:px-6 lg:px-8">
                 @foreach ($rooms as $room)
-                    <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg mb-4 border border-gray-200">
-                        <div class="p-6 text-gray-900 flex justify-between items-center">
+                    <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg mb-4 border border-gray-200 ">
+                        <div class="p-6 text-gray-900 flex justify-between items-center debug-grid">
                             <a href="{{ route('rooms.show', $room) }}" class="text-lg font-semibold">{{ __($room->room_name) }}</a>
                             @if ( Auth::user()->role == 'admin')
                             <form action="{{ route('rooms.destroy', $room) }}" method="POST">
