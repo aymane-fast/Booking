@@ -5,10 +5,18 @@
         </h1>
     </x-slot>
     <x-guest-layout>
+        <style>
+            .scrollable-table {
+             width: 100%; /* Adjust this value as needed */
+            overflow-x: auto;
+            overflow-y: hidden;
+            }
 
-        <div class="overflow-x-auto">
-            <h2 class="text-xl font-bold  text-center my-4">{{$days[0]}} / {{$days[6]}}</h2>
-                <table id="myTable" class="min-w-1/2 max-w-full mx-auto divide-y divide-gray-200 border border-gray-300">
+        </style>
+
+        <div class="overflow-x-auto scrollable-table">
+            <h2 class="text-xl font-bold text-center my-4">{{$days[0]}} / {{$days[6]}}</h2>
+            <table id="myTable" class="min-w-1/2 max-w-full mx-auto divide-y divide-gray-200 border border-gray-300">
                     <thead class="bg-gray-50">
                         <tr>
                             <th class="px-6 py-3 text-left text-lg font-bold text-gray-500 uppercase tracking-wider border border-gray-300">
@@ -34,7 +42,7 @@
                                             @if ( Auth::check() && $reservations[$day][$i]->user_id == Auth::user()->id || Auth::user()->role == 'admin')
                                             
                                                 <span class="flex items-start justify-between ">
-                                                    Mr {{ $reservations[$day][$i]->user->name }} :
+                                                    Prof {{ $reservations[$day][$i]->user->name }} :
                                                     {{ $reservations[$day][$i]->reason }} 
                                                 </span>
                                             @else
@@ -63,7 +71,7 @@
                                             <a href="{{ route('reservations.create', ['date' => $day, 'session_number' => $i ,'session_name' =>$sess[$i], 'room_id' => $room->id]) }}"
                                                 class="text-green-500 hover:text-green-700 mt-2">
                                                 Reserver <i class="fas fa-calendar-alt "></i>
-                                            </a>
+                                            </a>        
                                         </div>
                                         
                                     @endif
@@ -73,6 +81,7 @@
                         @endforeach
                     </tbody>
             </table>
+
         </div>
 
         <div class="flex justify-center mt-4">
