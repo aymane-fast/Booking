@@ -33,8 +33,11 @@
                 <!-- Page Content -->
                 <x-guest-layout>
                 <div class="flex items-center justify-center">
-                    <img class="mx-auto" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRjKIYaUH00r4D_beEqyd4RIUY3xrls6bCIzjjo-im_ZQ&s" alt="Description of image">
-                </div>                <!-- Session Status -->
+                    <img class="mx-auto" style="width: 20% ;  height: auto;" src="{{ asset('logo.jpg') }}" alt="Example Image">
+                </div>                
+                
+                
+                <!-- Session Status -->
                 <x-auth-session-status class="mb-4" :status="session('status')" />
             
                 <form method="POST" action="{{ route('login') }}">
